@@ -1,0 +1,82 @@
+﻿@model Gestión_de_las_Finanzas_Personales.Usuarios
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Usuarios</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cedula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cedula)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Limite_Egresos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Limite_Egresos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo_Persona)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo_Persona)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Corte)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Corte)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gestión_de_Egresos.Tipos_de_Egresos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gestión_de_Egresos.Tipos_de_Egresos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gestion_de_Ingresos.Tipos_de_ingresos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gestion_de_Ingresos.Tipos_de_ingresos)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdUsuarios }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

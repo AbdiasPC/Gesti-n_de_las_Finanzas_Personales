@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Gestión_de_Egresos">
+          <Key>
+            <PropertyRef Name="IdGestion_de_Egresos" />
+          </Key>
+          <Property Name="IdGestion_de_Egresos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipos_de_Egresos" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Renglon_de_Egresos" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tipo_de_Pago_por_Efecto" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gestion_de_Ingresos">
+          <Key>
+            <PropertyRef Name="IdGestion_de_Ingresos" />
+          </Key>
+          <Property Name="IdGestion_de_Ingresos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipos_de_ingresos" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Institucion_Empleador_Cliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Tipos_de_Egresos">
+          <Key>
+            <PropertyRef Name="IdTipos_de_Egresos" />
+          </Key>
+          <Property Name="IdTipos_de_Egresos" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipos_de_Ingresos">
+          <Key>
+            <PropertyRef Name="IdTipos_de_Ingresos" />
+          </Key>
+          <Property Name="IdTipos_de_Ingresos" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuarios" />
+          </Key>
+          <Property Name="IdUsuarios" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cedula" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Limite_Egresos" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tipo_Persona" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fecha_Corte" Type="date" Nullable="false" />
+          <Property Name="Estado" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Gestión_de_Egresos_Tipos_de_Egresos">
+          <End Role="Tipos_de_Egresos" Type="Self.Tipos_de_Egresos" Multiplicity="1" />
+          <End Role="Gestión_de_Egresos" Type="Self.Gestión_de_Egresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos_de_Egresos">
+              <PropertyRef Name="IdTipos_de_Egresos" />
+            </Principal>
+            <Dependent Role="Gestión_de_Egresos">
+              <PropertyRef Name="Tipos_de_Egresos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gestion_de_Ingresos_Tipos_de_Ingresos">
+          <End Role="Tipos_de_Ingresos" Type="Self.Tipos_de_Ingresos" Multiplicity="1" />
+          <End Role="Gestion_de_Ingresos" Type="Self.Gestion_de_Ingresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos_de_Ingresos">
+              <PropertyRef Name="IdTipos_de_Ingresos" />
+            </Principal>
+            <Dependent Role="Gestion_de_Ingresos">
+              <PropertyRef Name="Tipos_de_ingresos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gestion_de_Ingresos_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Gestion_de_Ingresos" Type="Self.Gestion_de_Ingresos" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuarios" />
+            </Principal>
+            <Dependent Role="Gestion_de_Ingresos">
+              <PropertyRef Name="IdGestion_de_Ingresos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Gestión_de_Egresos">
+          <End Role="Gestión_de_Egresos" Type="Self.Gestión_de_Egresos" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Gestión_de_Egresos">
+              <PropertyRef Name="IdGestion_de_Egresos" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdUsuarios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Gestión_de_Egresos" EntityType="Self.Gestión_de_Egresos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gestion_de_Ingresos" EntityType="Self.Gestion_de_Ingresos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipos_de_Egresos" EntityType="Self.Tipos_de_Egresos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipos_de_Ingresos" EntityType="Self.Tipos_de_Ingresos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Gestión_de_Egresos_Tipos_de_Egresos" Association="Self.FK_Gestión_de_Egresos_Tipos_de_Egresos">
+            <End Role="Tipos_de_Egresos" EntitySet="Tipos_de_Egresos" />
+            <End Role="Gestión_de_Egresos" EntitySet="Gestión_de_Egresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gestion_de_Ingresos_Tipos_de_Ingresos" Association="Self.FK_Gestion_de_Ingresos_Tipos_de_Ingresos">
+            <End Role="Tipos_de_Ingresos" EntitySet="Tipos_de_Ingresos" />
+            <End Role="Gestion_de_Ingresos" EntitySet="Gestion_de_Ingresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gestion_de_Ingresos_Usuarios" Association="Self.FK_Gestion_de_Ingresos_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Gestion_de_Ingresos" EntitySet="Gestion_de_Ingresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Gestión_de_Egresos" Association="Self.FK_Usuarios_Gestión_de_Egresos">
+            <End Role="Gestión_de_Egresos" EntitySet="Gestión_de_Egresos" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Gestión_de_Egresos">
+          <Key>
+            <PropertyRef Name="IdGestion_de_Egresos" />
+          </Key>
+          <Property Name="IdGestion_de_Egresos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipos_de_Egresos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Renglon_de_Egresos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo_de_Pago_por_Efecto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tipos_de_Egresos1" Relationship="Self.FK_Gestión_de_Egresos_Tipos_de_Egresos" FromRole="Gestión_de_Egresos" ToRole="Tipos_de_Egresos" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuarios_Gestión_de_Egresos" FromRole="Gestión_de_Egresos" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Gestion_de_Ingresos">
+          <Key>
+            <PropertyRef Name="IdGestion_de_Ingresos" />
+          </Key>
+          <Property Name="IdGestion_de_Ingresos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipos_de_ingresos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Institucion_Empleador_Cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tipos_de_Ingresos1" Relationship="Self.FK_Gestion_de_Ingresos_Tipos_de_Ingresos" FromRole="Gestion_de_Ingresos" ToRole="Tipos_de_Ingresos" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Gestion_de_Ingresos_Usuarios" FromRole="Gestion_de_Ingresos" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Tipos_de_Egresos">
+          <Key>
+            <PropertyRef Name="IdTipos_de_Egresos" />
+          </Key>
+          <Property Name="IdTipos_de_Egresos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Gestión_de_Egresos" Relationship="Self.FK_Gestión_de_Egresos_Tipos_de_Egresos" FromRole="Tipos_de_Egresos" ToRole="Gestión_de_Egresos" />
+        </EntityType>
+        <EntityType Name="Tipos_de_Ingresos">
+          <Key>
+            <PropertyRef Name="IdTipos_de_Ingresos" />
+          </Key>
+          <Property Name="IdTipos_de_Ingresos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Gestion_de_Ingresos" Relationship="Self.FK_Gestion_de_Ingresos_Tipos_de_Ingresos" FromRole="Tipos_de_Ingresos" ToRole="Gestion_de_Ingresos" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="IdUsuarios" />
+          </Key>
+          <Property Name="IdUsuarios" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cedula" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Limite_Egresos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo_Persona" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha_Corte" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Gestión_de_Egresos" Relationship="Self.FK_Usuarios_Gestión_de_Egresos" FromRole="Usuarios" ToRole="Gestión_de_Egresos" />
+          <NavigationProperty Name="Gestion_de_Ingresos" Relationship="Self.FK_Gestion_de_Ingresos_Usuarios" FromRole="Usuarios" ToRole="Gestion_de_Ingresos" />
+        </EntityType>
+        <Association Name="FK_Gestión_de_Egresos_Tipos_de_Egresos">
+          <End Role="Tipos_de_Egresos" Type="Self.Tipos_de_Egresos" Multiplicity="1" />
+          <End Role="Gestión_de_Egresos" Type="Self.Gestión_de_Egresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos_de_Egresos">
+              <PropertyRef Name="IdTipos_de_Egresos" />
+            </Principal>
+            <Dependent Role="Gestión_de_Egresos">
+              <PropertyRef Name="Tipos_de_Egresos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuarios_Gestión_de_Egresos">
+          <End Role="Gestión_de_Egresos" Type="Self.Gestión_de_Egresos" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Gestión_de_Egresos">
+              <PropertyRef Name="IdGestion_de_Egresos" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="IdUsuarios" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gestion_de_Ingresos_Tipos_de_Ingresos">
+          <End Role="Tipos_de_Ingresos" Type="Self.Tipos_de_Ingresos" Multiplicity="1" />
+          <End Role="Gestion_de_Ingresos" Type="Self.Gestion_de_Ingresos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipos_de_Ingresos">
+              <PropertyRef Name="IdTipos_de_Ingresos" />
+            </Principal>
+            <Dependent Role="Gestion_de_Ingresos">
+              <PropertyRef Name="Tipos_de_ingresos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Gestion_de_Ingresos_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Gestion_de_Ingresos" Type="Self.Gestion_de_Ingresos" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="IdUsuarios" />
+            </Principal>
+            <Dependent Role="Gestion_de_Ingresos">
+              <PropertyRef Name="IdGestion_de_Ingresos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Sistema_de__Finanzas_PersonalesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Gestión_de_Egresos" EntityType="Self.Gestión_de_Egresos" />
+          <EntitySet Name="Gestion_de_Ingresos" EntityType="Self.Gestion_de_Ingresos" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Tipos_de_Egresos" EntityType="Self.Tipos_de_Egresos" />
+          <EntitySet Name="Tipos_de_Ingresos" EntityType="Self.Tipos_de_Ingresos" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_Gestión_de_Egresos_Tipos_de_Egresos" Association="Self.FK_Gestión_de_Egresos_Tipos_de_Egresos">
+            <End Role="Tipos_de_Egresos" EntitySet="Tipos_de_Egresos" />
+            <End Role="Gestión_de_Egresos" EntitySet="Gestión_de_Egresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuarios_Gestión_de_Egresos" Association="Self.FK_Usuarios_Gestión_de_Egresos">
+            <End Role="Gestión_de_Egresos" EntitySet="Gestión_de_Egresos" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gestion_de_Ingresos_Tipos_de_Ingresos" Association="Self.FK_Gestion_de_Ingresos_Tipos_de_Ingresos">
+            <End Role="Tipos_de_Ingresos" EntitySet="Tipos_de_Ingresos" />
+            <End Role="Gestion_de_Ingresos" EntitySet="Gestion_de_Ingresos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Gestion_de_Ingresos_Usuarios" Association="Self.FK_Gestion_de_Ingresos_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Gestion_de_Ingresos" EntitySet="Gestion_de_Ingresos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Sistema_de__Finanzas_PersonalesEntities">
+          <EntitySetMapping Name="Gestión_de_Egresos">
+            <EntityTypeMapping TypeName="Model.Gestión_de_Egresos">
+              <MappingFragment StoreEntitySet="Gestión_de_Egresos">
+                <ScalarProperty Name="IdGestion_de_Egresos" ColumnName="IdGestion_de_Egresos" />
+                <ScalarProperty Name="Tipos_de_Egresos" ColumnName="Tipos_de_Egresos" />
+                <ScalarProperty Name="Renglon_de_Egresos" ColumnName="Renglon_de_Egresos" />
+                <ScalarProperty Name="Tipo_de_Pago_por_Efecto" ColumnName="Tipo_de_Pago_por_Efecto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gestion_de_Ingresos">
+            <EntityTypeMapping TypeName="Model.Gestion_de_Ingresos">
+              <MappingFragment StoreEntitySet="Gestion_de_Ingresos">
+                <ScalarProperty Name="IdGestion_de_Ingresos" ColumnName="IdGestion_de_Ingresos" />
+                <ScalarProperty Name="Tipos_de_ingresos" ColumnName="Tipos_de_ingresos" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Institucion_Empleador_Cliente" ColumnName="Institucion_Empleador_Cliente" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipos_de_Egresos">
+            <EntityTypeMapping TypeName="Model.Tipos_de_Egresos">
+              <MappingFragment StoreEntitySet="Tipos_de_Egresos">
+                <ScalarProperty Name="IdTipos_de_Egresos" ColumnName="IdTipos_de_Egresos" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipos_de_Ingresos">
+            <EntityTypeMapping TypeName="Model.Tipos_de_Ingresos">
+              <MappingFragment StoreEntitySet="Tipos_de_Ingresos">
+                <ScalarProperty Name="IdTipos_de_Ingresos" ColumnName="IdTipos_de_Ingresos" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Model.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="IdUsuarios" ColumnName="IdUsuarios" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="Limite_Egresos" ColumnName="Limite_Egresos" />
+                <ScalarProperty Name="Tipo_Persona" ColumnName="Tipo_Persona" />
+                <ScalarProperty Name="Fecha_Corte" ColumnName="Fecha_Corte" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
